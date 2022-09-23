@@ -1,0 +1,16 @@
+{
+    "t_patch_size": 256,
+    "valid_mode": "valid",
+    "v_patch_size": 400,
+    "v_batch_ratio": 1.0,
+    "edge_decay": 0.1,
+    "weight_decay": 0.01,
+    "data_augment": true,
+    "cache_memory": false,
+    "num_iter":16384,
+    "epochs":1000,
+    "warmup_epochs":50,
+    "const_epochs":0,
+    "frozen_epochs":200,
+    "eval_freq": 10
+}

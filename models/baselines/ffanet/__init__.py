@@ -1,0 +1,1 @@
+from .network import FFA as FFANet
