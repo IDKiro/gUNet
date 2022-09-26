@@ -1,5 +1,6 @@
 # Rethinking Performance Gains in Image Dehazing Networks
 
+[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2209.11448)
 [![Datasets](https://img.shields.io/badge/GoogleDrive-Datasets-red)](https://drive.google.com/drive/folders/1SwxS-t0zOsV6yrATEk54sGG5ntMyM6CH?usp=sharing) 
 [![Weights](https://img.shields.io/badge/GoogleDrive-Weights-yellow)](https://drive.google.com/drive/folders/1JZZONxfTTxOi4szFVPTfWewo6mfs7afU?usp=sharing)
 [![Logs](https://img.shields.io/badge/GoogleDrive-Logs-blue)](https://drive.google.com/drive/folders/1mAFXqGUbmvUT4plFoBlnxBb9nnCGvsh0?usp=sharing)
@@ -106,4 +107,17 @@ For example, we compute the #Param / MACs / Latency of gUNet-B:
 
 ```sh
 python profile.py --model gunet-b
+```
+
+## Citation
+
+If you find this work useful for your research, please cite our paper:
+
+```bibtex
+@article{song2022vision,
+  title={Rethinking Performance Gains in Image Dehazing Networks},
+  author={Song, Yuda and Zhou, Yang and Qian, Hui and Du, Xin},
+  journal={arXiv preprint arXiv:2209.11448},
+  year={2022}
+}
 ```
