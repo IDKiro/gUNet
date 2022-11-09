@@ -17,6 +17,10 @@ Finally, we verify these key designs to the performance gain of image dehazing n
 
 ![Architecture](figs/arch.png)
 
+### Main Results
+
+![Performance](figs/results.png)
+
 ### News
 
 - **Oct 8, 2022:** All codes, pre-trained models, and training logs are released, including models in ablation studies.
