@@ -64,7 +64,7 @@ class PairLoader(Dataset):
 		self.img_names = sorted(os.listdir(os.path.join(self.root_dir, 'GT')))
 		self.img_num = len(self.img_names)
 
-		self.cache_memory = cache_memory and mode == 'train'
+		self.cache_memory = cache_memory
 		self.source_files = {}
 		self.target_files = {}
 
@@ -83,7 +83,7 @@ class PairLoader(Dataset):
 			source_img = read_img(os.path.join(self.root_dir, 'IN', img_name), to_float=False)
 			target_img = read_img(os.path.join(self.root_dir, 'GT', img_name), to_float=False)
 
-			# cache in memory if specific (uint8 to save memory)
+			# cache in memory if specific (uint8 to save memory), need num_workers=0
 			if self.cache_memory:
 				self.source_files[img_name] = source_img
 				self.target_files[img_name] = target_img

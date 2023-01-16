@@ -73,6 +73,18 @@ class ConvLayerSE(ConvLayer):
 		return out
 
 
+class ConvLayerRS(ConvLayer):
+	def __init__(self, net_depth, dim, kernel_size=3, gate_act=nn.Sigmoid):
+		super().__init__(net_depth, dim, kernel_size, gate_act)
+		self.scale = nn.Parameter(torch.ones(1))
+
+	def forward(self, X):
+		out = self.Wv(X) * self.Wg(X)
+		out = self.proj(out)
+		out = out * self.scale
+		return out
+
+
 class ConvLayerECA(ConvLayer):
 	def __init__(self, net_depth, dim, kernel_size=3, gate_act=nn.Sigmoid):
 		super().__init__(net_depth, dim, kernel_size, gate_act)
@@ -135,7 +147,8 @@ def GhostBN_16(dim):
 	return GhostBatchNorm(dim, 16)
 
 
-__all__ = ['gunet_k3_t', 'gunet_k7_t', 'gunet_s5_t', 'gunet_s9_t', 'gunet_ln_t', 'gunet_in_t', 'gunet_nn_t', 'gunet_hsig_t', 'gunet_tanh_t', 'gunet_relu_t', 'gunet_gelu_t', 'gunet_idt_t', 'gunet_sum_t', 'gunet_cat_t', 'gunet_se_t', 'gunet_eca_t', 'gunet_d2x_t', 'gunet_w2x_t', 
+__all__ = ['gunet_k3_t', 'gunet_k7_t', 'gunet_s5_t', 'gunet_s9_t', 'gunet_ln_t', 'gunet_in_t', 'gunet_nn_t', 'gunet_hsig_t', 'gunet_tanh_t', 'gunet_relu_t', 'gunet_gelu_t', 
+		   'gunet_idt_t', 'gunet_sum_t', 'gunet_cat_t', 'gunet_se_t', 'gunet_eca_t', 'gunet_rs_t', 'gunet_d2x_t', 'gunet_w2x_t',
 		   'gunet_nb1_t', 'gunet_nb2_t', 'gunet_nb4_t', 'gunet_nb8_t', 'gunet_nb16_t', 'gunet_nb32_t', 'gunet_nb64_t', 'gunet_nb128_t',
 		   'gunet_0wd_t', 'gunet_cwd_t', 'gunet_nf_t', 'gunet_nw_t', 'gunet_ni_t', 'gunet_nmp_t', 'gunet_t_0', 'gunet_t_1', 'gunet_t_2', 'gunet_t_3', 'gunet_t_4']
 
@@ -183,6 +196,9 @@ def gunet_cat_t():
 
 def gunet_se_t():
 	return gUNet(kernel_size=5, base_dim=24, depths=[2, 2, 2, 4, 2, 2, 2], conv_layer=ConvLayerSE, norm_layer=nn.BatchNorm2d, gate_act=nn.Sigmoid, fusion_layer=SKFusion)
+
+def gunet_rs_t():
+	return gUNet(kernel_size=5, base_dim=24, depths=[2, 2, 2, 4, 2, 2, 2], conv_layer=ConvLayerRS, norm_layer=nn.BatchNorm2d, gate_act=nn.Sigmoid, fusion_layer=SKFusion)
 
 def gunet_eca_t():
 	return gUNet(kernel_size=5, base_dim=24, depths=[2, 2, 2, 4, 2, 2, 2], conv_layer=ConvLayerECA, norm_layer=nn.BatchNorm2d, gate_act=nn.Sigmoid, fusion_layer=SKFusion)

@@ -45,7 +45,9 @@ else:
 with open(os.path.join('configs', args.exp, 'base.json'), 'r') as f:
 	b_setup = json.load(f)
 
-with open(os.path.join('configs', args.exp, 'model_'+args.model.split('_')[-1]+'.json'), 'r') as f:
+variant = args.model.split('_')[-1]
+config_name = 'model_'+variant+'.json' if variant in ['t', 's', 'b', 'd'] else 'default.json'	# default.json as baselines' configuration file 
+with open(os.path.join('configs', args.exp, config_name), 'r') as f:
 	m_setup = json.load(f)
 
 
@@ -101,7 +103,7 @@ def valid(val_loader, network):
 
 		mse_loss = F.mse_loss(output * 0.5 + 0.5, target_img * 0.5 + 0.5, reduction='none').mean((1, 2, 3))
 		psnr = 10 * torch.log10(1 / mse_loss).mean()
-		if args.use_ddp: psnr = reduce_mean(psnr, dist.get_world_size())		# comment this line for more accurate validation
+		# if args.use_ddp: psnr = reduce_mean(psnr, dist.get_world_size())		# comment this line for more accurate validation
 		
 		PSNR.update(psnr.item(), source_img.size(0))
 
@@ -163,13 +165,13 @@ def main():
 							  num_workers=args.num_workers // world_size,
 							  pin_memory=True,
 							  drop_last=True,
-							  persistent_workers=True)
+							  persistent_workers=True)	# comment this line for cache_memory
 
 	val_dataset = PairLoader(os.path.join(args.data_dir, args.val_set), b_setup['valid_mode'], 
 							 b_setup['v_patch_size'])
 	val_loader = DataLoader(val_dataset,
 							batch_size=max(int(m_setup['batch_size'] * b_setup['v_batch_ratio'] // world_size), 1),
-							sampler=DistributedSampler(val_dataset, shuffle=False),		# comment this line for more accurate validation
+							# sampler=DistributedSampler(val_dataset, shuffle=False),		# comment this line for more accurate validation
 							num_workers=args.num_workers // world_size,
 							pin_memory=True)
 

@@ -1,11 +1,12 @@
 # Add by user
 .vscode/
-_backup/
 data/
 results/
 saved_models/
 runtime_models/
 logs/
+
+_backup/
 _note/
 
 run*.sh

@@ -104,13 +104,13 @@ All test scripts can be found in `run.sh`.
 Run the following script to compute the overhead:
 
 ```sh
-python profile.py --model (model name)
+python overhead.py --model (model name)
 ```
 
 For example, we compute the #Param / MACs / Latency of gUNet-B:
 
 ```sh
-python profile.py --model gunet-b
+python overhead.py --model gunet-b
 ```
 
 ## Citation
